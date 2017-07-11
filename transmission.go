@@ -7,6 +7,16 @@ import (
 	"sort"
 )
 
+const (
+	StatusPaused       = 0
+	StatusWait         = 1
+	StatusCheck        = 2
+	StatusDownloadWait = 3
+	StatusDownload     = 4
+	StatisSeedWait     = 5
+	StatusSeed         = 6
+)
+
 //TransmissionClient to talk to transmission
 type TransmissionClient struct {
 	apiclient ApiClient
