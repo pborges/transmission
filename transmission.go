@@ -57,6 +57,11 @@ type Torrent struct {
 	HashString    string  `json:"hashString"`
 	Error         int     `json:"error"`
 	ErrorString   string  `json:"errorString"`
+	Files []struct {
+		BytesCompleted int    `json:"bytesCompleted"`
+		Length         int    `json:"length"`
+		Name           string `json:"name"`
+	} `json:"files"`
 }
 
 // Torrents represent []Torrent
@@ -64,8 +69,8 @@ type Torrents []Torrent
 
 // sorting types
 type (
-	byID        Torrents
-	byName      Torrents
+	byID Torrents
+	byName Torrents
 	byAddedDate Torrents
 )
 
@@ -149,7 +154,7 @@ func NewGetTorrentsCmd() (*Command, error) {
 	cmd.Arguments.Fields = []string{"id", "name", "hashString",
 		"status", "addedDate", "leftUntilDone", "eta", "uploadRatio",
 		"rateDownload", "rateUpload", "downloadDir", "isFinished",
-		"percentDone", "seedRatioMode", "error", "errorString"}
+		"percentDone", "seedRatioMode", "error", "errorString", "files"}
 
 	return cmd, nil
 }
