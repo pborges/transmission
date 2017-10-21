@@ -57,6 +57,7 @@ type Torrent struct {
 	HashString    string  `json:"hashString"`
 	Error         int     `json:"error"`
 	ErrorString   string  `json:"errorString"`
+	TotalSize     int     `json:"totalSize"`
 	Files []struct {
 		BytesCompleted int    `json:"bytesCompleted"`
 		Length         int    `json:"length"`
@@ -145,6 +146,16 @@ func (ac *TransmissionClient) StartTorrent(id int) (string, error) {
 //StopTorrent start the torrent
 func (ac *TransmissionClient) StopTorrent(id int) (string, error) {
 	return ac.sendSimpleCommand("torrent-stop", id)
+}
+
+//RemoveTorrent remove the torrent
+func (ac *TransmissionClient) RemoveTorrent(id int, removeFile bool) error {
+	cmd, err := NewDelCmd(id, removeFile)
+	if err != nil {
+		return err
+	}
+	_, err = ac.ExecuteCommand(cmd)
+	return err
 }
 
 func NewGetTorrentsCmd() (*Command, error) {
